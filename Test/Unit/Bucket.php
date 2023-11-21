@@ -36,11 +36,11 @@ declare(strict_types=1);
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Event\Test\Unit;
+namespace igorora\Event\Test\Unit;
 
-use Hoa\Event as LUT;
-use Hoa\Event\Bucket as SUT;
-use Hoa\Test;
+use igorora\Event as LUT;
+use igorora\Event\Bucket as SUT;
+use igorora\Test;
 
 /**
  * Test suite of the bucket.
@@ -64,8 +64,8 @@ class Bucket extends Test\Unit\Suite
 
         $this
             ->given(
-                $eventId = 'hoa://Event/Test',
-                $source  = new \Mock\Hoa\Event\Source(),
+                $eventId = 'igorora://Event/Test',
+                $source  = new \Mock\igorora\Event\Source(),
                 LUT::register($eventId, $source),
 
                 $bucket = new SUT('foo'),
@@ -93,7 +93,7 @@ class Bucket extends Test\Unit\Suite
         $this
             ->given(
                 $bucket  = new SUT(),
-                $sourceA = new \Mock\Hoa\Event\Source()
+                $sourceA = new \Mock\igorora\Event\Source()
             )
             ->when($result = $bucket->setSource($sourceA))
             ->then
@@ -102,7 +102,7 @@ class Bucket extends Test\Unit\Suite
                 ->object($bucket->getSource())
                     ->isIdenticalTo($sourceA)
 
-            ->given($sourceB = new \Mock\Hoa\Event\Source())
+            ->given($sourceB = new \Mock\igorora\Event\Source())
             ->when($result = $bucket->setSource($sourceB))
             ->then
                 ->object($result)

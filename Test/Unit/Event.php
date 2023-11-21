@@ -36,11 +36,11 @@ declare(strict_types=1);
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Event\Test\Unit;
+namespace igorora\Event\Test\Unit;
 
-use Hoa\Event as LUT;
-use Hoa\Event\Event as SUT;
-use Hoa\Test;
+use igorora\Event as LUT;
+use igorora\Event\Event as SUT;
+use igorora\Test;
 
 /**
  * Test suite of the event class.
@@ -50,7 +50,7 @@ class Event extends Test\Unit\Suite
     public function case_multiton(): void
     {
         $this
-            ->given($eventId = 'hoa://Event/Test')
+            ->given($eventId = 'igorora://Event/Test')
             ->when($result = SUT::getEvent($eventId))
             ->then
                 ->object($result)
@@ -63,8 +63,8 @@ class Event extends Test\Unit\Suite
     {
         $this
             ->given(
-                $eventId = 'hoa://Event/Test',
-                $source  = new \Mock\Hoa\Event\Source()
+                $eventId = 'igorora://Event/Test',
+                $source  = new \Mock\igorora\Event\Source()
             )
             ->when($result = SUT::register($eventId, $source))
             ->then
@@ -78,8 +78,8 @@ class Event extends Test\Unit\Suite
     {
         $this
             ->given(
-                $eventId = 'hoa://Event/Test',
-                $source  = 'Mock\Hoa\Event\Source'
+                $eventId = 'igorora://Event/Test',
+                $source  = 'Mock\igorora\Event\Source'
             )
             ->when($result = SUT::register($eventId, $source))
             ->then
@@ -93,8 +93,8 @@ class Event extends Test\Unit\Suite
     {
         $this
             ->given(
-                $eventId = 'hoa://Event/Test',
-                $source  = new \Mock\Hoa\Event\Source(),
+                $eventId = 'igorora://Event/Test',
+                $source  = new \Mock\igorora\Event\Source(),
                 SUT::register($eventId, $source)
             )
             ->exception(function () use ($eventId, $source): void {
@@ -107,7 +107,7 @@ class Event extends Test\Unit\Suite
     {
         $this
             ->given(
-                $eventId = 'hoa://Event/Test',
+                $eventId = 'igorora://Event/Test',
                 $source  = new \StdClass()
             )
             ->exception(function () use ($eventId, $source): void {
@@ -120,7 +120,7 @@ class Event extends Test\Unit\Suite
     {
         $this
             ->given(
-                $eventId = 'hoa://Event/Test',
+                $eventId = 'igorora://Event/Test',
                 $source  = 'StdClass'
             )
             ->exception(function () use ($eventId, $source): void {
@@ -133,8 +133,8 @@ class Event extends Test\Unit\Suite
     {
         $this
             ->given(
-                $eventId = 'hoa://Event/Test',
-                $source  = new \Mock\Hoa\Event\Source(),
+                $eventId = 'igorora://Event/Test',
+                $source  = new \Mock\igorora\Event\Source(),
                 SUT::register($eventId, $source)
             )
             ->when($result = SUT::unregister($eventId))
@@ -147,8 +147,8 @@ class Event extends Test\Unit\Suite
     {
         $this
             ->given(
-                $eventId = 'hoa://Event/Test',
-                $source  = new \Mock\Hoa\Event\Source(),
+                $eventId = 'igorora://Event/Test',
+                $source  = new \Mock\igorora\Event\Source(),
                 SUT::register($eventId, $source),
                 $event = SUT::getEvent($eventId)
             )
@@ -163,7 +163,7 @@ class Event extends Test\Unit\Suite
     public function case_unregister_not_registered(): void
     {
         $this
-            ->given($eventId = 'hoa://Event/Test')
+            ->given($eventId = 'igorora://Event/Test')
             ->when($result = SUT::unregister($eventId))
             ->then
                 ->variable($result)
@@ -174,7 +174,7 @@ class Event extends Test\Unit\Suite
     {
         $this
             ->given(
-                $event    = SUT::getEvent('hoa://Event/Test'),
+                $event    = SUT::getEvent('igorora://Event/Test'),
                 $callable = function (): void {
                 }
             )
@@ -190,7 +190,7 @@ class Event extends Test\Unit\Suite
     {
         $this
             ->given(
-                $event    = SUT::getEvent('hoa://Event/Test'),
+                $event    = SUT::getEvent('igorora://Event/Test'),
                 $callable = function (): void {
                 },
                 $event->attach($callable)
@@ -207,7 +207,7 @@ class Event extends Test\Unit\Suite
     {
         $this
             ->given(
-                $event    = SUT::getEvent('hoa://Event/Test'),
+                $event    = SUT::getEvent('igorora://Event/Test'),
                 $callable = function (): void {
                 }
             )
@@ -222,7 +222,7 @@ class Event extends Test\Unit\Suite
     public function case_is_listened(): void
     {
         $this
-            ->given($event = SUT::getEvent('hoa://Event/Test'))
+            ->given($event = SUT::getEvent('igorora://Event/Test'))
             ->when($result = $event->isListened())
             ->then
                 ->boolean($event->isListened())
@@ -235,8 +235,8 @@ class Event extends Test\Unit\Suite
 
         $this
             ->given(
-                $eventId = 'hoa://Event/Test',
-                $source  = new \Mock\Hoa\Event\Source(),
+                $eventId = 'igorora://Event/Test',
+                $source  = new \Mock\igorora\Event\Source(),
                 $bucket  = new LUT\Bucket(),
 
                 SUT::register($eventId, $source),
@@ -264,8 +264,8 @@ class Event extends Test\Unit\Suite
     {
         $this
             ->given(
-                $eventId = 'hoa://Event/Test',
-                $source  = new \Mock\Hoa\Event\Source(),
+                $eventId = 'igorora://Event/Test',
+                $source  = new \Mock\igorora\Event\Source(),
                 $data    = new LUT\Bucket()
             )
             ->exception(function () use ($eventId, $source, $data): void {
@@ -278,8 +278,8 @@ class Event extends Test\Unit\Suite
     {
         $this
             ->given(
-                $eventId = 'hoa://Event/Test',
-                $source  = new \Mock\Hoa\Event\Source(),
+                $eventId = 'igorora://Event/Test',
+                $source  = new \Mock\igorora\Event\Source(),
                 SUT::register($eventId, $source)
             )
             ->when($result = SUT::eventExists($eventId))
@@ -291,7 +291,7 @@ class Event extends Test\Unit\Suite
     public function case_event_not_exists(): void
     {
         $this
-            ->given($eventId = 'hoa://Event/Test')
+            ->given($eventId = 'igorora://Event/Test')
             ->when($result = SUT::eventExists($eventId))
             ->then
                 ->boolean($result)

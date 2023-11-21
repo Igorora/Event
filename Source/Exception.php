@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Hoa
  *
@@ -36,13 +34,18 @@ declare(strict_types=1);
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Event;
+namespace igorora\Event;
 
-use Hoa\Exception as HoaException;
+use igorora\Exception\Exception as IgororaException;
 
 /**
- * Extending the `Hoa\Exception\Exception` class.
+ * Class \igorora\Event\Exception.
+ *
+ * Extending the Exception class.
+ *
+ * @copyright  Copyright © 2007-2017 Hoa community
+ * @license    New BSD License
  */
-class Exception extends HoaException
+class Exception extends IgororaException
 {
 }

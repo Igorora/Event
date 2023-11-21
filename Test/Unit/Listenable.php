@@ -36,9 +36,9 @@ declare(strict_types=1);
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Event\Test\Unit;
+namespace igorora\Event\Test\Unit;
 
-use Hoa\Test;
+use igorora\Test;
 
 /**
  * Test suite of the listenable interface.
@@ -48,9 +48,9 @@ class Listenable extends Test\Unit\Suite
     public function case_interface(): void
     {
         $this
-            ->when($result = new \Mock\Hoa\Event\Listenable())
+            ->when($result = new \Mock\igorora\Event\Listenable())
             ->then
                 ->object($result)
-                    ->isInstanceOf(\Hoa\Event\Listenable::class);
+                    ->isInstanceOf(\igorora\Event\Listenable::class);
     }
 }

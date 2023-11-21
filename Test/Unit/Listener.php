@@ -36,11 +36,11 @@ declare(strict_types=1);
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Event\Test\Unit;
+namespace igorora\Event\Test\Unit;
 
-use Hoa\Event as LUT;
-use Hoa\Event\Listener as SUT;
-use Hoa\Test;
+use igorora\Event as LUT;
+use igorora\Event\Listener as SUT;
+use igorora\Test;
 
 /**
  * Test suite of the listener.
@@ -51,7 +51,7 @@ class Listener extends Test\Unit\Suite
     {
         $this
             ->given(
-                $source = new \Mock\Hoa\Event\Listenable(),
+                $source = new \Mock\igorora\Event\Listenable(),
                 $ids    = ['foo', 'bar', 'baz']
             )
             ->when($result = new SUT($source, $ids))
@@ -70,7 +70,7 @@ class Listener extends Test\Unit\Suite
     {
         $this
             ->given(
-                $source     = new \Mock\Hoa\Event\Listenable(),
+                $source     = new \Mock\igorora\Event\Listenable(),
                 $listenerId = 'foo',
                 $listener   = new SUT($source, ['foo', 'bar']),
                 $callable   = function () {
@@ -89,7 +89,7 @@ class Listener extends Test\Unit\Suite
     {
         $this
             ->given(
-                $source     = new \Mock\Hoa\Event\Listenable(),
+                $source     = new \Mock\igorora\Event\Listenable(),
                 $listenerId = 'bar',
                 $listener   = new SUT($source, ['foo', 'baz']),
                 $callable   = function (): void {
@@ -105,7 +105,7 @@ class Listener extends Test\Unit\Suite
     {
         $this
             ->given(
-                $source     = new \Mock\Hoa\Event\Listenable(),
+                $source     = new \Mock\igorora\Event\Listenable(),
                 $listenerId = 'foo',
                 $listener   = new SUT($source, ['foo', 'bar']),
                 $callable   = function () {
@@ -125,7 +125,7 @@ class Listener extends Test\Unit\Suite
     {
         $this
             ->given(
-                $source     = new \Mock\Hoa\Event\Listenable(),
+                $source     = new \Mock\igorora\Event\Listenable(),
                 $listenerId = 'bar',
                 $listener   = new SUT($source, ['foo', 'baz']),
                 $callable   = function (): void {
@@ -141,7 +141,7 @@ class Listener extends Test\Unit\Suite
     {
         $this
             ->given(
-                $source     = new \Mock\Hoa\Event\Listenable(),
+                $source     = new \Mock\igorora\Event\Listenable(),
                 $listenerId = 'foo',
                 $listener   = new SUT($source, ['foo', 'bar'])
             )
@@ -157,7 +157,7 @@ class Listener extends Test\Unit\Suite
     {
         $this
             ->given(
-                $source     = new \Mock\Hoa\Event\Listenable(),
+                $source     = new \Mock\igorora\Event\Listenable(),
                 $listenerId = 'bar',
                 $listener   = new SUT($source, ['foo', 'baz'])
             )
@@ -171,7 +171,7 @@ class Listener extends Test\Unit\Suite
     {
         $this
             ->given(
-                $source   = new \Mock\Hoa\Event\Listenable(),
+                $source   = new \Mock\igorora\Event\Listenable(),
                 $ids      = [],
                 $listener = new SUT($source, $ids)
             )
@@ -194,7 +194,7 @@ class Listener extends Test\Unit\Suite
 
         $this
             ->given(
-                $source   = new \Mock\Hoa\Event\Listenable(),
+                $source   = new \Mock\igorora\Event\Listenable(),
                 $ids      = ['foo', 'bar'],
                 $listener = new SUT($source, $ids),
 
@@ -227,7 +227,7 @@ class Listener extends Test\Unit\Suite
     {
         $this
             ->given(
-                $source   = new \Mock\Hoa\Event\Listenable(),
+                $source   = new \Mock\igorora\Event\Listenable(),
                 $ids      = [],
                 $listener = new SUT($source, $ids)
             )

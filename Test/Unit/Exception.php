@@ -36,17 +36,17 @@ declare(strict_types=1);
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Event\Test\Unit;
+namespace igorora\Event\Test\Unit;
 
-use Hoa\Event\Exception as SUT;
-use Hoa\Test;
+use igorora\Event\Exception as SUT;
+use igorora\Test;
 
 /**
  * Test suite of the exception.
  */
 class Exception extends Test\Unit\Suite
 {
-    public function case_hoa_exception(): void
+    public function case_igorora_exception(): void
     {
         $this
             ->when($result = new SUT('foo', 0))

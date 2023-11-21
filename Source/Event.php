@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Hoa
  *
@@ -36,35 +34,48 @@ declare(strict_types=1);
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Event;
+namespace igorora\Event;
 
-use Hoa\Consistency;
+use igorora\consistency\Consistency;
 
 /**
+ * Class \igorora\Event\Event.
+ *
  * Events are asynchronous at registration, anonymous at use (until we
  * receive a bucket) and useful to largely spread data through components
  * without any known connection between them.
+ *
+ * @copyright  Copyright © 2007-2017 Hoa community
+ * @license    New BSD License
  */
 class Event
 {
     /**
      * Event ID key.
+     *
+     * @const int
      */
-    public const KEY_EVENT  = 0;
+    const KEY_EVENT  = 0;
 
     /**
      * Source object key.
+     *
+     * @const int
      */
-    public const KEY_SOURCE = 1;
+    const KEY_SOURCE = 1;
 
     /**
-     * Static register of all observable objects, i.e. `Hoa\Event\Source`
+     * Static register of all observable objects, i.e. \igorora\Event\Source
      * object, i.e. object that can send event.
+     *
+     * @var array
      */
     private static $_register = [];
 
     /**
-     * Collection of callables, i.e. observer objects.
+     * Callables, i.e. observer objects.
+     *
+     * @var array
      */
     protected $_callable      = [];
 
@@ -72,6 +83,7 @@ class Event
 
     /**
      * Privatize the constructor.
+     *
      */
     private function __construct()
     {
@@ -81,8 +93,11 @@ class Event
     /**
      * Manage multiton of events, with the principle of asynchronous
      * attachments.
+     *
+     * @param   string  $eventId    Event ID.
+     * @return  \igorora\Event\Event
      */
-    public static function getEvent(string $eventId): Event
+    public static function getEvent($eventId)
     {
         if (!isset(self::$_register[$eventId][self::KEY_EVENT])) {
             self::$_register[$eventId] = [
@@ -95,10 +110,15 @@ class Event
     }
 
     /**
-     * Declares a new object in the observable collection.
-     * Note: Hoa's libraries use `hoa://Event/anID` for their observable objects.
+     * Declare a new object in the observable collection.
+     * Note: Hoa's libraries use igorora://Event/AnID for their observable objects;
+     *
+     * @param   string                    $eventId    Event ID.
+     * @param   \igorora\Event\Source|string  $source     Observable object or class.
+     * @return  void
+     * @throws  \igorora\Event\Exception
      */
-    public static function register(string $eventId, /*Source|string*/ $source): void
+    public static function register($eventId, $source)
     {
         if (true === self::eventExists($eventId)) {
             throw new Exception(
@@ -111,7 +131,7 @@ class Event
 
         if (is_object($source) && !($source instanceof Source)) {
             throw new Exception(
-                'The source must implement \Hoa\Event\Source ' .
+                'The source must implement \igorora\Event\Source ' .
                 'interface; given %s.',
                 1,
                 get_class($source)
@@ -119,9 +139,9 @@ class Event
         } else {
             $reflection = new \ReflectionClass($source);
 
-            if (false === $reflection->implementsInterface('\Hoa\Event\Source')) {
+            if (false === $reflection->implementsInterface('\igorora\Event\Source')) {
                 throw new Exception(
-                    'The source must implement \Hoa\Event\Source ' .
+                    'The source must implement \igorora\Event\Source ' .
                     'interface; given %s.',
                     2,
                     $source
@@ -134,30 +154,38 @@ class Event
         }
 
         self::$_register[$eventId][self::KEY_SOURCE] = $source;
+
+        return;
     }
 
     /**
-     * Undeclares an object in the observable collection.
+     * Undeclare an object in the observable collection.
      *
-     * If `$hard` is set to `true, then the source and its attached callables
-     * will be deleted.
+     * @param   string  $eventId    Event ID.
+     * @param   bool    $hard       If false, just delete the source, else,
+     *                              delete source and attached callables.
+     * @return  void
      */
-    public static function unregister(string $eventId, bool $hard = false): void
+    public static function unregister($eventId, $hard = false)
     {
         if (false !== $hard) {
             unset(self::$_register[$eventId]);
         } else {
             self::$_register[$eventId][self::KEY_SOURCE] = null;
         }
+
+        return;
     }
 
     /**
      * Attach an object to an event.
-     *
      * It can be a callable or an accepted callable form (please, see the
-     * `Hoa\Consistency\Xcallable` class).
+     * \igorora\Consistency\Xcallable class).
+     *
+     * @param   mixed   $callable    Callable.
+     * @return  \igorora\Event\Event
      */
-    public function attach($callable): self
+    public function attach($callable)
     {
         $callable                              = xcallable($callable);
         $this->_callable[$callable->getHash()] = $callable;
@@ -166,11 +194,13 @@ class Event
     }
 
     /**
-     * Detaches an object to an event.
+     * Detach an object to an event.
+     * Please see $this->attach() method.
      *
-     * Please see `self::attach` method.
+     * @param   mixed   $callable    Callable.
+     * @return  \igorora\Event\Event
      */
-    public function detach($callable): self
+    public function detach($callable)
     {
         unset($this->_callable[xcallable($callable)->getHash()]);
 
@@ -178,17 +208,25 @@ class Event
     }
 
     /**
-     * Checks if at least one callable is attached to an event.
+     * Check if at least one callable is attached to an event.
+     *
+     * @return  bool
      */
-    public function isListened(): bool
+    public function isListened()
     {
         return !empty($this->_callable);
     }
 
     /**
-     * Notifies, i.e. send data to observers.
+     * Notify, i.e. send data to observers.
+     *
+     * @param   string             $eventId    Event ID.
+     * @param   \igorora\Event\Source  $source     Source.
+     * @param   \igorora\Event\Bucket  $data       Data.
+     * @return  void
+     * @throws  \igorora\Event\Exception
      */
-    public static function notify(string $eventId, Source $source, Bucket $data): void
+    public static function notify($eventId, Source $source, Bucket $data)
     {
         if (false === self::eventExists($eventId)) {
             throw new Exception(
@@ -204,12 +242,17 @@ class Event
         foreach ($event->_callable as $callable) {
             $callable($data);
         }
+
+        return;
     }
 
     /**
-     * Checks whether an event exists.
+     * Check whether an event exists.
+     *
+     * @param   string  $eventId    Event ID.
+     * @return  bool
      */
-    public static function eventExists(string $eventId): bool
+    public static function eventExists($eventId)
     {
         return
             array_key_exists($eventId, self::$_register) &&
@@ -220,4 +263,4 @@ class Event
 /**
  * Flex entity.
  */
-Consistency::flexEntity(Event::class);
+Consistency::flexEntity('igorora\Event\Event');

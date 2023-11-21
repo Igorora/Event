@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Hoa
  *
@@ -36,24 +34,35 @@ declare(strict_types=1);
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Event;
+namespace igorora\Event;
 
 /**
+ * Trait \igorora\Event\Listens.
+ *
  * Implementation of a listener.
+ *
+ * @copyright  Copyright © 2007-2017 Hoa community
+ * @license    New BSD License
  */
 trait Listens
 {
     /**
-     * Listener instance of type `Hoa\Event\Listener`.
+     * Listener instance.
+     *
+     * @var \igorora\Event\Listener
      */
     protected $_listener = null;
 
 
 
     /**
-     * Attaches a callable to a listenable component.
+     * Attach a callable to a listenable component.
+     *
+     * @param   string  $listenerId    Listener ID.
+     * @param   mixed   $callable      Callable.
+     * @return  \igorora\Event\Listenable
      */
-    public function on(string $listenerId, $callable): Listenable
+    public function on($listenerId, $callable)
     {
         $listener = $this->getListener();
 
@@ -72,9 +81,12 @@ trait Listens
     }
 
     /**
-     * Sets a new listener.
+     * Set listener.
+     *
+     * @param  \igorora\Event\Listener  $listener    Listener.
+     * @return \igorora\Event\Listener
      */
-    protected function setListener(Listener $listener): ?Listener
+    protected function setListener(Listener $listener)
     {
         $old             = $this->_listener;
         $this->_listener = $listener;
@@ -83,9 +95,11 @@ trait Listens
     }
 
     /**
-     * Returns the listener.
+     * Get listener.
+     *
+     * @return \igorora\Event\Listener
      */
-    protected function getListener(): ?Listener
+    protected function getListener()
     {
         return $this->_listener;
     }

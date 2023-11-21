@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Hoa
  *
@@ -36,27 +34,38 @@ declare(strict_types=1);
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Event;
+namespace igorora\Event;
 
 /**
+ * Class \igorora\Event\Bucket.
+ *
  * This class is the object which is transmit through event channels.
+ *
+ * @copyright  Copyright © 2007-2017 Hoa community
+ * @license    New BSD License
  */
 class Bucket
 {
     /**
-     * The source object (must be of kind `Hoa\Event\Source`).
+     * Source object.
+     *
+     * @var \igorora\Event\Source
      */
     protected $_source = null;
 
     /**
-     * Data attached to the bucket.
+     * Data.
+     *
+     * @var mixed
      */
     protected $_data   = null;
 
 
 
     /**
-     * Allocates a new bucket with various data attached to it.
+     * Set data.
+     *
+     * @param   mixed   $data    Data.
      */
     public function __construct($data = null)
     {
@@ -66,17 +75,24 @@ class Bucket
     }
 
     /**
-     * Sends this object on the event channel.
+     * Send this object on the event channel.
+     *
+     * @param   string             $eventId    Event ID.
+     * @param   \igorora\Event\Source  $source     Source.
+     * @return  void
      */
-    public function send(string $eventId, Source $source)
+    public function send($eventId, Source $source)
     {
         return Event::notify($eventId, $source, $this);
     }
 
     /**
-     * Sets a new source.
+     * Set source.
+     *
+     * @param   \igorora\Event\Source  $source    Source.
+     * @return  \igorora\Event\Source
      */
-    public function setSource(Source $source): ?Source
+    public function setSource(Source $source)
     {
         $old           = $this->_source;
         $this->_source = $source;
@@ -85,15 +101,20 @@ class Bucket
     }
 
     /**
-     * Returns the source.
+     * Get source.
+     *
+     * @return  \igorora\Event\Source
      */
-    public function getSource(): ?Source
+    public function getSource()
     {
         return $this->_source;
     }
 
     /**
-     * Sets new data.
+     * Set data.
+     *
+     * @param   mixed   $data    Data.
+     * @return  mixed
      */
     public function setData($data)
     {
@@ -104,7 +125,9 @@ class Bucket
     }
 
     /**
-     * Returns the data.
+     * Get data.
+     *
+     * @return  mixed
      */
     public function getData()
     {

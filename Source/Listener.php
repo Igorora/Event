@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Hoa
  *
@@ -36,21 +34,30 @@ declare(strict_types=1);
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Event;
+namespace igorora\Event;
 
 /**
+ * Class \igorora\Event\Listener.
+ *
  * A contrario of events, listeners are synchronous, identified at use and
  * useful for close interactions between one or some components.
+ *
+ * @copyright  Copyright © 2007-2017 Hoa community
+ * @license    New BSD License
  */
 class Listener
 {
     /**
-     * Source of listener (for `Hoa\Event\Bucket`).
+     * Source of listener (for Bucket).
+     *
+     * @var \igorora\Event\Listenable
      */
     protected $_source    = null;
 
     /**
      * All listener IDs and associated listeners.
+     *
+     * @var array
      */
     protected $_callables = [];
 
@@ -58,6 +65,9 @@ class Listener
 
     /**
      * Build a listener.
+     *
+     * @param   \igorora\Event\Listenable  $source    Source (for Bucket).
+     * @param   array                  $ids       Accepted ID.
      */
     public function __construct(Listenable $source, array $ids)
     {
@@ -68,19 +78,29 @@ class Listener
     }
 
     /**
-     * Adds acceptable ID (or reset).
+     * Add acceptable ID (or reset).
+     *
+     * @param   array  $ids    Accepted ID.
+     * @return  void
      */
-    public function addIds(array $ids): void
+    public function addIds(array $ids)
     {
         foreach ($ids as $id) {
             $this->_callables[$id] = [];
         }
+
+        return;
     }
 
     /**
-     * Attaches a callable to a listenable component.
+     * Attach a callable to a listenable component.
+     *
+     * @param   string  $listenerId    Listener ID.
+     * @param   mixed   $callable      Callable.
+     * @return  \igorora\Event\Listener
+     * @throws  \igorora\Event\Exception
      */
-    public function attach(string $listenerId, $callable): self
+    public function attach($listenerId, $callable)
     {
         if (false === $this->listenerExists($listenerId)) {
             throw new Exception(
@@ -97,9 +117,13 @@ class Listener
     }
 
     /**
-     * Detaches a callable from a listenable component.
+     * Detach a callable from a listenable component.
+     *
+     * @param   string  $listenerId    Listener ID.
+     * @param   mixed   $callable      Callable.
+     * @return  \igorora\Event\Listener
      */
-    public function detach(string $listenerId, $callable): self
+    public function detach($listenerId, $callable)
     {
         unset($this->_callables[$listenerId][xcallable($callable)->getHash()]);
 
@@ -107,9 +131,12 @@ class Listener
     }
 
     /**
-     * Detaches all callables from a listenable component.
+     * Detach all callables from a listenable component.
+     *
+     * @param  string  $listenerId    Listener ID.
+     * @return \igorora\Event\Listener
      */
-    public function detachAll(string $listenerId): self
+    public function detachAll($listenerId)
     {
         unset($this->_callables[$listenerId]);
 
@@ -117,17 +144,25 @@ class Listener
     }
 
     /**
-     * Checks if a listener exists.
+     * Check if a listener exists.
+     *
+     * @param   string  $listenerId    Listener ID.
+     * @return  bool
      */
-    public function listenerExists(string $listenerId): bool
+    public function listenerExists($listenerId)
     {
         return array_key_exists($listenerId, $this->_callables);
     }
 
     /**
-     * Sends/fires a bucket to a listener.
+     * Send/fire a bucket to a listener.
+     *
+     * @param   string             $listenerId    Listener ID.
+     * @param   \igorora\Event\Bucket  $data          Data.
+     * @return  array
+     * @throws  \igorora\Event\Exception
      */
-    public function fire(string $listenerId, Bucket $data): array
+    public function fire($listenerId, Bucket $data)
     {
         if (false === $this->listenerExists($listenerId)) {
             throw new Exception(

@@ -36,14 +36,14 @@ declare(strict_types=1);
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Event\Test\Unit;
+namespace igorora\Event\Test\Unit;
 
-use Hoa\Event as LUT;
-use Hoa\Event\Listens as SUT;
-use Hoa\Test;
+use igorora\Event as LUT;
+use igorora\Event\Listens as SUT;
+use igorora\Test;
 
 /**
- * Class \Hoa\Event\Test\Unit\Listens.
+ * Class \igorora\Event\Test\Unit\Listens.
  *
  * Test suite of the listens trait.
  *
@@ -113,7 +113,7 @@ class Listens extends Test\Unit\Suite
             ->exception(function () use ($listenable): void {
                 $listenable->on('bar', null);
             })
-                ->isInstanceOf('Hoa\Event\Exception');
+                ->isInstanceOf('igorora\Event\Exception');
     }
 }
 

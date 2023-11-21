@@ -36,9 +36,9 @@ declare(strict_types=1);
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Event\Test\Unit;
+namespace igorora\Event\Test\Unit;
 
-use Hoa\Test;
+use igorora\Test;
 
 /**
  * Test suite of the source interface.
@@ -48,9 +48,9 @@ class Source extends Test\Unit\Suite
     public function case_interface(): void
     {
         $this
-            ->when($result = new \Mock\Hoa\Event\Source())
+            ->when($result = new \Mock\igorora\Event\Source())
             ->then
                 ->object($result)
-                    ->isInstanceOf(\Hoa\Event\Source::class);
+                    ->isInstanceOf(\igorora\Event\Source::class);
     }
 }
